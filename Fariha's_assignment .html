@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Student Marksheet</title>
+  <style>
+    header {
+      height: 90px;
+      background-image: linear-gradient(to right, #e0e0f8, #bab2ff, #e6d9ff);
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      font-weight: bold;
+      color: midnightblue;
+    }
+    .head{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .head h1{
+      margin-top: 30px;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-image: linear-gradient(to top, #e0e0f8, #bab2ff, #e6d9ff);
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+    }
+    .content {
+      margin-top: 90px;
+      margin-left: 200px;
+      align-content: center;
+      align-items: center;
+    
+    }
+    .left-btn {
+      font-weight: bold;
+      margin-left: 200px;
+      float: left;
+      height: 270px;
+      width: 300px;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      background-color: rgb(219, 215, 250)  
+      
+    }
+    .right-btn {
+      font-weight: bold;
+      margin-right: 280px;
+      float: right;
+      height: 270px;
+      width: 300px;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      background-color: rgb(219, 215, 250) 
+    }
+     footer {
+      margin-top: 100px;
+      height: 80px;
+      background-image: linear-gradient(to right, #dedefd, #b5adfc, #e6d9ff);
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      font-weight: bold;
+      color: midnightblue;
+    }
+
+  </style>
+</head>
+
+<body>
+  <header>
+  <div class="head">
+    <h1> Fariha's Assignment </h1>
+  </div>
+</header>
+<div class="containter">
+  <div class="content">
+      <div class="left">
+  <button id="gradeBtn" class="left-btn"><h2>KNOW YOUR GRADE</h2></button>
+</div>
+<div class="right">
+  <button id="printBtn" class="right-btn"><h2>PRINT THE TABLE</h2></button>
+</div>
+  </div>
+</div>
+<div id="marksheet-area"></div>
+<footer><div class="foot" style="text-align: center; padding-top: 30px;"> Submitted by Fariha Arain | Wb Development Assignment | 2025 <br> Every great developer was once a beginner! </div></footer>
+<script>
+  var gradeBtn = document.getElementById("gradeBtn");
+  var printBtn = document.getElementById("printBtn");
+  var studentName = "";
+  var subjects = ["Math", "English", "Science"];
+  var marks = [];
+  var total = 0;
+  var percentage = 0;
+  var grade = "";
+
+  gradeBtn.addEventListener("click", function () {
+    studentName = prompt("Enter student name:");
+    marks = [];
+    total = 0;
+
+    var i = 0;
+    while (i < subjects.length) {
+      var input = prompt("Enter marks for " + subjects[i] + " (0 to 100):");
+      var mark = parseInt(input);
+      if (!isNaN(mark) && mark >= 0 && mark <= 100) {
+        marks[i] = mark;
+        total += mark;
+        i++;
+      } else {
+        alert("Invalid input! Please enter marks between 0 and 100.");
+      }
+    }
+
+    percentage = total / subjects.length;
+
+    if (percentage >= 80) {
+      grade = "A+";
+    } else if (percentage >= 70) {
+      grade = "A";
+    } else if (percentage >= 60) {
+      grade = "B";
+    } else if (percentage >= 50) {
+      grade = "C";
+    } else {
+      grade = "Fail";
+    }
+
+    alert("Student: " + studentName + "\nTotal: " + total + "\nPercentage: " + percentage.toFixed(2) + "%\nGrade: " + grade);
+  });
+
+  printBtn.addEventListener("click", function () {
+    if (marks.length === 0) {
+      alert("Please enter marks using the 'KNOW YOUR GRADE' button first.");
+    } else {
+      var table = `
+        <div style="margin: 30px; padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.2); width: fit-content;">
+          <h2>Student Marksheet</h2>
+          <p><strong>Name:</strong> ${studentName}</p>
+          <table border="1" cellpadding="10" cellspacing="0">
+            <thead>
+              <tr><th>Subject</th><th>Marks</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>${subjects[0]}</td><td>${marks[0]}</td></tr>
+              <tr><td>${subjects[1]}</td><td>${marks[1]}</td></tr>
+              <tr><td>${subjects[2]}</td><td>${marks[2]}</td></tr>
+            </tbody>
+          </table>
+          <p><strong>Total Marks:</strong> ${total}</p>
+          <p><strong>Percentage:</strong> ${percentage.toFixed(2)}%</p>
+          <p><strong>Grade:</strong> ${grade}</p>
+        </div>
+      `;
+
+      document.getElementById("marksheet-area").innerHTML = table;
+    }
+  });
+</script>
+
+</body>
+</html>
